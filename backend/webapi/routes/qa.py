@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from webapi.services.vectorizer import search_similar  # Function to search for similar text using vector similarity
 
 router = APIRouter()  # Initialize API router for handling Q&A routes
@@ -10,3 +10,9 @@ def ask_question(question: str):
     
     # Return the matched context as a response
     return {"context": results}
+
+
+@router.get("/test")
+def test_search(question: str = Query(...)):
+    results = search_similar(question)
+    return {"top_chunks": results}
